@@ -7,7 +7,7 @@ import StatsCard    from '../components/StatsCard';
 import OrdersChart  from '../components/OrdersChart';
 
 // URL du backend Express (définie dans next.config.js)
-const BACKEND_URL = 'http://localhost:4000';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000';
 
 // Seuil pour signaler visuellement les grosses commandes
 const HIGH_VALUE_THRESHOLD = 50000;
