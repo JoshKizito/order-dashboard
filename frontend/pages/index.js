@@ -61,6 +61,19 @@ export default function Dashboard() {
     }
   }
 
+  async function sendTelegramAlerts() {
+  setSyncing(true);
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/orders/notify`, { method: 'POST' });
+    const data = await res.json();
+    alert(data.message);
+  } catch (err) {
+    alert('Erreur Telegram : ' + err.message);
+  } finally {
+    setSyncing(false);
+  }
+}
+
   /**
    * Formate un nombre en monnaie (ex: 50000 → "50 000 ₸")
    */
@@ -114,6 +127,14 @@ export default function Dashboard() {
           >
             {loading ? '⏳ Загрузка...' : '🔄 Обновить'}
           </button>
+          <button
+            className="sync-button"
+            onClick={sendTelegramAlerts}
+            disabled={syncing}
+            style={{ marginLeft: '10px', backgroundColor: '#0088cc' }}
+        >
+          📨 Telegram
+        </button>
         </div>
 
         {/* ===== État d'erreur ===== */}

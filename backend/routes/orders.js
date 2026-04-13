@@ -42,4 +42,21 @@ router.get('/by-date', async (req, res) => {
   }
 });
 
+router.post('/notify', async (req, res) => {
+  try {
+    const telegram = require('../services/telegram');
+    const orders = await supabaseService.getAllOrders();
+    let count = 0;
+    for (const order of orders) {
+      if (Number(order.total_sum) > 50000) {
+        await telegram.notifyIfHighValue(order);
+        count++;
+      }
+    }
+    res.json({ success: true, message: `${count} alertes envoyées` });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 module.exports = router;
