@@ -39,22 +39,22 @@ async function sendMessage(message) {
 async function notifyIfHighValue(order) {
   if (Number(order.total_sum) > ALERT_THRESHOLD) {
     const message = [
-      `🚨 <b>Commande importante détectée !</b>`,
+      `🚨 <b>Обнаружен важный заказ!</b>`,
       ``,
-      `📦 <b>Numéro :</b> ${order.number}`,
-      `👤 <b>Client :</b> ${order.customer_name}`,
-      `💰 <b>Montant :</b> ${Number(order.total_sum).toLocaleString('fr-FR')} ₸`,
-      `📋 <b>Statut :</b> ${order.status}`,
-      `📅 <b>Date :</b> ${new Date(order.created_at).toLocaleDateString('fr-FR')}`,
+      `📦 <b>Номер :</b> ${order.number}`,
+      `👤 <b>Клиент :</b> ${order.customer_name}`,
+      `💰 <b>Сумма :</b> ${Number(order.total_sum).toLocaleString('ru-RU')} ₸`,
+      `📋 <b>Статус :</b> ${order.status}`,
+      `📅 <b>Дата :</b> ${new Date(order.created_at).toLocaleDateString('ru-RU')}`,
       ``,
-      `⚡ Seuil dépassé : ${ALERT_THRESHOLD.toLocaleString('fr-FR')} ₸`,
+      `⚡ Порог превышен : ${ALERT_THRESHOLD.toLocaleString('ru-RU')} ₸`,
     ].join('\n');
 
     try {
       await sendMessage(message);
-      console.log(`📨 Alerte Telegram envoyée pour commande ${order.number} (${order.total_sum} ₸)`);
+      console.log(`Алерт Telegram отправлен для заказа ${order.number}`);
     } catch (err) {
-      console.error('Erreur envoi Telegram :', err.message);
+      console.error('Ошибка отправки Telegram :', err.message);
     }
   }
 }
